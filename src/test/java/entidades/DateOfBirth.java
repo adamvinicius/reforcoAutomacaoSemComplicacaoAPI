@@ -1,4 +1,4 @@
-package registerMap;
+package entidades;
 
 import java.util.LinkedHashMap;
 
