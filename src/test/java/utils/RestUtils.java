@@ -1,10 +1,12 @@
 package utils;
 
 import io.restassured.http.ContentType;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import static io.restassured.RestAssured.*;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 
 public class RestUtils {
 
@@ -21,6 +23,10 @@ public class RestUtils {
 	
 	public static Object getResponse(String key) {
 		return response.getBody().jsonPath().get(key);
+	}
+		
+	public static JsonPath getJsonPath() {
+		return response.getBody().jsonPath();
 	}
 	
 	public static int getStatusCode() {

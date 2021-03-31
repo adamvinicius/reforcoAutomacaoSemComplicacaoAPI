@@ -2,6 +2,8 @@ package steps;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.List;
+
 import io.cucumber.java.pt.Entao;
 import utils.RestUtils;
 
@@ -23,6 +25,22 @@ public class GenericSteps {
 	    assertEquals("Quantidade de caracteres incorreta:",quantidade, tamanho);
 	    
 	}
+	
+	@Entao("a valido que o campo {string} tenha o valor {string}")
+	public void aValidoQueOCampoTenhaOValor(String key, String value) {
+	    assertEquals(value, RestUtils.getResponse(key));
+	}
+	
+	@Entao("valido que a lista {string} tenha o valor {string}")
+	public void aValidoQueAListaTenhaOValor(String key, String value) throws Exception {
+	    List<String> categorias = (List<String>) RestUtils.getResponse(key);
+		if (!categorias.contains(value)) {
+			throw new Exception("Não foi encontrado o valor '"+value+"' na lista: "+categorias);
+		}
+	}
+
+
+
 	
 	
 
