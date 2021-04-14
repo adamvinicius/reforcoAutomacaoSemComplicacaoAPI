@@ -10,8 +10,9 @@ import entidades.plataformafilmes.Plataformas;
 
 public class FilmeMassa {
 
-	public static String url = "http://localhost:8080";
-	public static String endpoint = "plataformas";
+	public static String url = "http://localhost:8080/";
+	public static String endpoint = "filmes";
+	public static String id;
 	
 	public Plataformas plataformas = new Plataformas("NetFlix");
 	public List<LinkedHashMap<String, Object>> listPlataformas = new ArrayList<>();

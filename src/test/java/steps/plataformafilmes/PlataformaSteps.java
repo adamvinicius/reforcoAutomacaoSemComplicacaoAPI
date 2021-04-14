@@ -5,9 +5,11 @@ import java.util.LinkedHashMap;
 
 import entidades.plataformafilmes.Plataformas;
 import io.cucumber.java.pt.Dado;
+import io.cucumber.java.pt.Entao;
 import io.cucumber.java.pt.Quando;
 import massa.plataformafilmes.PlataformaMassa;
 import massa.plataformafilmes.TokenMassa;
+import utils.BaseUtils;
 import utils.RestUtils;
 
 public class PlataformaSteps {
@@ -22,19 +24,11 @@ public class PlataformaSteps {
 	
 	@Quando("o campo {string} for alterado para {string} de Plataforma")
 	public void oCampoForAlteradoParaDePlataforma(String key, String value) {
-	    value = trataCampos(value);
+	    value = BaseUtils.trataCampos(value);
 		plataformas.setPlataformas(key, value);
 	}
 	
-	public String trataCampos(String value) {
-		if (value.contains("[data]")) {
-			String timestamp = new Timestamp(System.currentTimeMillis()).toString();  
-	        timestamp = timestamp.replace("-", "").replace(" ", "").replace(":", "").replace(".", "");
-	        value = value.replace("[data]", timestamp);
-		}
-		
-		return value;
-	}
+	
 
 
 
@@ -45,9 +39,26 @@ public class PlataformaSteps {
 	    header.put("Authorization", TokenMassa.authorization);
 	    
 	    RestUtils.postRequest(PlataformaMassa.endpoint, header, plataformas.getPlataformas());
-	    
-	    System.out.println(RestUtils.getBody());
 	}
+	
+	@Entao("armazeno o valor do campo nome do response de Plataforma")
+	public void armazenoOValorDoCampoNomeDoResponseDePlataforma() {
+	    PlataformaMassa.nome = RestUtils.getResponse("nome").toString();
+	}
+	
+	@Dado("que tenha realizado um cadastro na plataforma e o valor do nome foi armazenado")
+	public void queTenhaRealizadoUmCadastroNaPlataformaEOValorDoNomeFoiArmazenado() {
+	    this.sejamPreenchidosOsValoresDePlataforma();
+	    this.oCampoForAlteradoParaDePlataforma("nome", "Disney++[data]");
+	    this.umRequestDePOSTForRealizadoDePlataforma();
+	    this.armazenoOValorDoCampoNomeDoResponseDePlataforma();
+	}
+
+
+
+
+
+
 
 
 

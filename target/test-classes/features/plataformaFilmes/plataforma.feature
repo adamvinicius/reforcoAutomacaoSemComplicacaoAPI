@@ -8,4 +8,5 @@ Funcionalidade: Plataforma
     Quando o campo "nome" for alterado para "Disney++[data]" de Plataforma
     Quando um request de POST for realizado de Plataforma
     Entao o sistema devolve o status 201
+    E armazeno o valor do campo nome do response de Plataforma
 		
